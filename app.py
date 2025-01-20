@@ -2,6 +2,22 @@ from flask import Flask, request, jsonify, send_file, render_template_string
 from yt_dlp import YoutubeDL
 import os
 
+import yt_dlp
+
+def download_video(url):
+    ydl_opts = {
+        'cookies_from_browser': 'chrome',  # 'firefox' für Firefox
+        'outtmpl': '%(title)s.%(ext)s',
+        'verbose': True  # Gibt ausführliche Informationen aus
+    }
+
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
+
+# Beispielaufruf
+download_video('https://www.youtube.com/watch?v=hI9HQfCAw64')
+
+
 app = Flask(__name__)
 DOWNLOAD_FOLDER = "downloads"
 
